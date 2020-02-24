@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <!-- sample change-->
     <record id="res_country_region_view_tree" model="ir.ui.view">
         <field name="name">res.country.region.state</field>
         <field name="model">res.country.state</field>
