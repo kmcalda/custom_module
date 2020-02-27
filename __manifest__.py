@@ -3,6 +3,7 @@
     'name': "Custom Module",
     'summary': """
         Module for custom views and models""",
+    'website': 'https://github.com/kmcalda/custom_module',
     'author': "Kevin Marvin Calda",
     'category': 'Extra tool',
     'version': '0.1',
