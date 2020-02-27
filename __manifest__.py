@@ -8,7 +8,7 @@
     'version': '0.1',
     'license': 'AGPL-3',
     'sequence': 10,
-    'depends': ['base', 'sale_management'],
+    'depends': ['base', 'sale_management', 'inventory','contacts', 'account'],
     'data': [
         'views/custom_views.xml',
     ],
