@@ -34,7 +34,7 @@
             </xpath>
             <xpath expr="//field[@name='country_id']" position="before">
                 <div>
-                    <field name="region_contact" placeholder="Region" required="1"
+                    <field name="region_contact" placeholder="Region"
                            style="width: 30%; margin-right: 2%; display: inline"/>
                     <field name="ref" required="True" placeholder="Reference"
                            style="width: 68%"/>
