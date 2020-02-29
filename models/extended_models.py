@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class ContactsInherited(models.Model):
@@ -10,19 +11,27 @@ class ContactsInherited(models.Model):
 class ContactsRespartnerInherited(models.Model):
     _inherit = 'res.partner'
 
-    region_contact = fields.Char(string='Region')
+    region_contact = fields.Char(string='Region', required=1)
 
     @api.onchange('state_id')
     def onchange_value_state_id(self):
         for reg in self:
             reg.region_contact = reg.state_id.region_name
 
+    @api.constrains('vat')
+    def _check_value_len(self):
+        for val in self:
+            if val.vat.isdigit() != True:
+                raise ValidationError("Error! Special characters are not allowed!")
+            if len(val.vat) != 12:
+                raise ValidationError("Error! TIN should be 12-digits!")
+
     _sql_constraints = [
         ('ref_unique', 'unique(ref)',
          'Error! Reference already exist'),
 
         ('vat_unique', 'unique(vat)',
-         'Error! TIN already exist')
+         'Error! TIN already exist'),
     ]
 
 
@@ -32,4 +41,4 @@ class ProductTemplateInherited(models.Model):
     _sql_constraints = [
         ('default_code_unique', 'unique(default_code)',
          'Error! Internal reference already exist'),
-        ]
+    ]
