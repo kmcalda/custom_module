@@ -16,8 +16,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='ref']" position="replace">
-            </xpath>
+            <xpath expr="//field[@name='ref']" position="replace"/>
             <xpath expr="//field[@name='street']" position="attributes">
                 <attribute name="required">True</attribute>
             </xpath>
@@ -35,7 +34,7 @@
             </xpath>
             <xpath expr="//field[@name='country_id']" position="before">
                 <div>
-                    <field name="region_contact" required="1" placeholder="Region"
+                    <field name="region_contact" placeholder="Region" required="1"
                            style="width: 30%; margin-right: 2%; display: inline"/>
                     <field name="ref" required="True" placeholder="Reference"
                            style="width: 68%"/>
@@ -43,7 +42,7 @@
             </xpath>
             <xpath expr="//field[@name='vat']" position="attributes">
                 <attribute name="string">TIN</attribute><attribute name="required">True</attribute>
-                /<attribute name="placeholder">e.g 000-000-000-000</attribute>
+                <attribute name="placeholder">e.g 000-000-000-000</attribute>
             </xpath>
         </field>
     </record>
