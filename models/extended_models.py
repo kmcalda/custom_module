@@ -11,7 +11,7 @@ class ContactsInherited(models.Model):
 class ContactsRespartnerInherited(models.Model):
     _inherit = 'res.partner'
 
-    region_contact = fields.Char(string='Region', required=1)
+    region_contact = fields.Char(string='Region')
 
     @api.onchange('state_id')
     def onchange_value_state_id(self):
