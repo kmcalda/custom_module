@@ -17,7 +17,7 @@ sudo git clone https://github.com/kmcalda/custom_module.git
 
 ##### 5. Look for the module named _"Custom Module"_ then install
 
-## Grabbing updated codes of the module from github
+## Grabbing updated codes of the module
 
 ##### 1. Make sure you are inside the module directory
 Example: ```cd /odoo/custom_addons/custom_module```
