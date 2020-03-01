@@ -47,9 +47,9 @@ git pull
 - [x] ***Inventory***: Internal Reference in Products form is now unique
 - [x] ***Invoicing***: Notebook tag is hidden if not a Billing Administrator
 - [ ] ***Invoicing***: Create a custom group for invoicing
-- [ ] Detailed Operation must include field to enter expiry date
-- [ ] Detailed Operation in Transfer Receipt should autoget Item for assigning lot number
+- [ ] ***Inventory***: Detailed Operation must include field to enter expiry date
+- [ ] ***Inventory***: Detailed Operation in Transfer Receipt should autoget Item for assigning lot number
 - [x] ***Contacts***: 12-digit TIN on Contacts (no special character or hypen)
-- [x] ***Contacts***: Region should not be editable (Work around: Added a constrain so that only the define region on that particular state will be used else error will pop-up)
+- [x] ***Contacts***: Region should not be editable (Work around: Added a constrain so that only the define region with the particular state will be used else error will pop-up)
 - [ ] ***Inventory***: Lot number in detailed operations should be mandatory
 - [ ] ***Inventory***: Customize receiving to allow input of expiry date (best before date field)
