@@ -28,7 +28,7 @@ sudo service odoo-server restart
 ```
 cd /odoo/custom_addons/custom_module
 ```
-##### 2. Use the command git pull to fetch and merge the update
+##### 2. Use the command git pull to fetch and merge
 ```
 git pull
 ```
