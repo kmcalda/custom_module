@@ -38,7 +38,7 @@ git pull
 ## Task list
 - [x] ***Contacts***: Add Region field in Fed. States
 - [x] ***Contacts***: Add Region field in contact form
-- [x] ***Contacts***: Move Internal Reference(Renamed to Reference) to place beside Region field before the ***_Country_*** field
+- [x] ***Contacts***: Move Internal Reference(Renamed to Reference) to place beside Region field before the Country field
 - [x] ***Contacts***: Change Tax ID name to TIN
 - [x] ***Contacts***: TIN and Reference are now unique
 - [x] ***Contacts***: Mandatory field (Street,Street2,City,State,Zip,Region,Reference,TIN)
