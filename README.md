@@ -4,7 +4,7 @@ This module is for testing/sample only!
 
 ## Installation procedure
 
-##### 1. Clone the module to your custom addons directory using git
+##### 1. Clone the module to your custom addons directory using _Git_
 ```cd odoo/custom_addons```
 ```
 sudo git clone https://github.com/kmcalda/custom_module.git
