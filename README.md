@@ -45,7 +45,7 @@ git pull
 - [x] ***Sales***: Unit Price in Orders form is now uneditable
 - [x] ***Inventory***: Mandatory field (Source Document in Transfer form)
 - [x] ***Inventory***: Internal Reference in Products form is now unique
-- [x] ***Invoicing***: Notebook tag is hidden if not a Billing Administrator
+- [x] ***Invoicing***: Notebook tag is hidden if not a Billing Administrator(Temporary)
 - [ ] ***Invoicing***: Create a custom group for invoicing
 - [ ] ***Inventory***: Detailed Operation must include field to enter expiry date
 - [ ] ***Inventory***: Detailed Operation in Transfer Receipt should autoget Item for assigning lot number
