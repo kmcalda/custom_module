@@ -22,7 +22,7 @@ sudo service odoo-server restart
 
 ##### 5. Look for the module named _"Custom Module"_ then install
 
-## Grabbing updated codes of the module
+## Grabbing updates
 
 ##### 1. Make sure you are inside the module directory
 ```
