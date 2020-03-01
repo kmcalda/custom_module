@@ -24,7 +24,7 @@ class ContactsRespartnerInherited(models.Model):
     def check_region_contact_validity(self):
         for reg_cont in self:
             if reg_cont.region_contact != reg_cont.state_id.region_name:
-                raise ValidationError("Error! You're not allowed to change the Region")
+                raise ValidationError("Error! You're not allowed to change the Region!")
 
     # alert user to put 12-digits only without special characters
     @api.constrains('vat')
