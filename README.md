@@ -39,13 +39,13 @@ git pull
 - [x] ***Contacts***: Add Region field in Fed. States
 - [x] ***Contacts***: Add Region field in contact form
 - [x] ***Contacts***: Move Internal Reference(Renamed to Reference) to place beside Region field before the ***_Country_*** field
-- [x] ***Contacts***: **_Change Tax ID_** name to **_TIN_**
-- [x] ***Contacts***: **_TIN_** and **_Reference_** are now unique
-- [x] ***Contacts***: Mandatory field (***_Street,Street2,City,State,Zip,Region,Reference,TIN_***)
-- [x] ***Sales***: **_Unit Price_** in **_Orders_** form is now uneditable
-- [x] ***Inventory***: Mandatory field (**_Source Document_** in **_Transfer_** form)
-- [x] ***Inventory***: **_Internal Reference_** in Products form is now unique
-- [x] ***Invoicing***: Notebook tag is hidden if not a **_Billing Administrtor_**
+- [x] ***Contacts***: Change Tax ID name to TIN
+- [x] ***Contacts***: TIN and Reference are now unique
+- [x] ***Contacts***: Mandatory field (Street,Street2,City,State,Zip,Region,Reference,TIN)
+- [x] ***Sales***: Unit Price in Orders form is now uneditable
+- [x] ***Inventory***: Mandatory field (Source Document in Transfer form)
+- [x] ***Inventory***: Internal Reference in Products form is now unique
+- [x] ***Invoicing***: Notebook tag is hidden if not a Billing Administrator
 - [ ] ***Invoicing***: Create a custom group for invoicing
 - [ ] Detailed Operation must include field to enter expiry date
 - [ ] Detailed Operation in Transfer Receipt should autoget Item for assigning lot number
