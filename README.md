@@ -32,5 +32,5 @@ cd /odoo/custom_addons/custom_module
 ```
 git pull
 ```
-##### 3. Same with _Installation procedure_, start from 2 to 4
+##### 3. Same with the _Installation procedure_, start from 2 to 4
 ##### 4. Look for the module name then _update_
