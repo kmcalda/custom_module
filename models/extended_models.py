@@ -30,7 +30,7 @@ class ContactsRespartnerInherited(models.Model):
     @api.constrains('vat')
     def _check_value_len(self):
         for val in self:
-            if val.vat.isdigit() != True:
+            if not val.vat.isdigit():
                 raise ValidationError("Error! Special characters are not allowed!")
             if len(val.vat) != 12:
                 raise ValidationError("Error! TIN should be 12-digits!")
