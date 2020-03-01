@@ -33,11 +33,11 @@
                 <attribute name="required">True</attribute>
             </xpath>
             <xpath expr="//field[@name='country_id']" position="before">
-                <div class="o_address_format">
+                <div>
                     <field name="ref" required="True" placeholder="Reference"
                            style="width: 68%; display: inline; margin-right: 2%"/>
                     <field name="region_contact" placeholder="Region"
-                           style="width: 30%" readonly="1" force_save="1"/>
+                           style="width: 30%" required="1"/>
                 </div>
             </xpath>
             <xpath expr="//field[@name='vat']" position="attributes">
