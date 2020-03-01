@@ -26,6 +26,13 @@ class ContactsRespartnerInherited(models.Model):
             if len(val.vat) != 12:
                 raise ValidationError("Error! TIN should be 12-digits!")
 
+    # overriding create of res.partner
+    @api.model
+    def create(self, vals):
+        res = super(ContactsRespartnerInherited, self).create(vals)
+        # code inside
+        return res
+
     _sql_constraints = [
         ('ref_unique', 'unique(ref)',
          'Error! Reference already exist'),
