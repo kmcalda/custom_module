@@ -14,7 +14,7 @@ class ContactsRespartnerInherited(models.Model):
     _inherit = 'res.partner'
 
     region_contact = fields.Char(string='Region')
-    payable_options = fields.Selection([('vat', 'VAT'), ('non', 'NON VAT')], string='Payable Option', default=False)
+    payable_options = fields.Selection([('vat', 'VAT'), ('exempt', 'VAT EXEMPT')], string='Payable Option', default=False)
 
     @api.onchange('state_id')
     def onchange_value_state_id(self):
@@ -170,7 +170,14 @@ class SalesOrderCustom(models.Model):
 class SalesOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    product_packaging_qty = fields.Float('Package Quantity')
+    # calculate uom qty / packaging
+    @api.onchange('product_uom_qty')
+    def _calculate_pcs_box(self):
+        for data in self:
+            if data.product_packaging:
+                self.product_packaging_qty = data.product_uom_qty / data.product_packaging.qty
+
+    product_packaging_qty = fields.Float(string='Package Quantity', descriptio="Field for packaging qty")
 
     # overide product_packaging method
     def _check_package(self):
@@ -188,7 +195,6 @@ class SalesOrderLine(models.Model):
     def _product_packaging_qty_calc(self):
         if self.product_packaging:
             self.product_uom_qty = self.product_packaging_qty * self.product_packaging.qty
-            return {}
 
     # override onchange for payable option
     @api.onchange('product_id')
