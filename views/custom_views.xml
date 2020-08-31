@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+    <!--  Add region field after the name field fed states     -->
         <record id="res_country_region_view_tree" model="ir.ui.view">
             <field name="name">res.country.region.state</field>
             <field name="model">res.country.state</field>
             <field name="inherit_id" ref="base.view_country_state_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="region_name" required="True"/>
+                    <field name="region_name" required="False"/>
                 </xpath>
             </field>
         </record>
 
+        <!--  Added, remove fields and change attributes contact form     -->
         <record id="res_contact_region_view_form" model="ir.ui.view">
             <field name="name">res.partner.region</field>
             <field name="model">res.partner</field>
@@ -35,30 +37,85 @@
                 </xpath>
                 <xpath expr="//field[@name='country_id']" position="before">
                     <div>
-                        <field name="ref" required="True" placeholder="Reference"
+                        <field name="region_contact" required="False" placeholder="Region"
                                style="width: 68%; display: inline; margin-right: 2%"/>
-                        <field name="region_contact" placeholder="Region"
+                        <field name="ref" placeholder="Reference"
                                style="width: 30%" required="1"/>
                     </div>
                 </xpath>
-                <xpath expr="//field[@name='vat']" position="attributes">
-                    <attribute name="string">TIN</attribute><attribute name="required">True</attribute>
-                    <attribute name="placeholder">e.g 000-000-000-000</attribute>
+                <xpath expr="//field[@name='vat']" position="replace">
+                    <field name="vat" string="TIN" placeholder="e.g. 000-000-000-000"
+                           attrs="{'readonly': [('parent_id','!=',False)],'required': False}"/>
                 </xpath>
+
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="payable_options" />
+                </xpath>
+
             </field>
         </record>
 
+    <!--  Change the attribute of price_unit SO form -->
         <record id="sales_order_price_unit_view_form" model="ir.ui.view">
             <field name="name">sale.order.price_unit.form</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager,custom_module.group_customer_service_all_leads</attribute>
+                </xpath>
+
+                <button name="action_cancel" position="replace">
+                    <button name="action_cancel" states="draft,sent,sale,nav" type="object" string="Cancel"/>
+                </button>
+                <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
+                    <attribute name="states">sent,sale,nav</attribute>
+                </xpath>
+
+<!--                "Send For Review" button       -->
+                <xpath expr="//button[@name='action_quotation_send'][1]" position="after">
+                    <button name="email_review" type="object" string="Send For Review" states="draft"
+                            groups="sales_team.group_sale_manager,custom_module.group_customer_service_all_leads"/>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send'][4]" position="after">
+                    <button name="email_review" type="object" string="Send For Review" states="sent"
+                            groups="sales_team.group_sale_manager,custom_module.group_customer_service_all_leads"/>
+                </xpath>
+
                 <xpath expr="//tree/field[@name='price_unit']" position="attributes">
                     <attribute name="attrs">{'readonly': [('product_uom_qty', '&gt;', 0)]}</attribute>
+                </xpath>
+
+                <xpath expr="//page[1]/field/tree/field[@name='product_uom_qty']" position="before">
+                    <xpath expr="//page[1]/field/tree/field[@name='product_packaging']" position="move"/>
+                </xpath>
+<!--                <xpath expr="//page[1]/field/tree/field[@name='product_packaging']" position="replace"/>-->
+
+<!--                <xpath expr="//page[1]/field/tree/field[@name='product_uom_qty']" position="before">-->
+<!--                    <field name="product_packaging"-->
+<!--                           attrs="{'invisible': [('product_id', '=', False)],'required':[('product_packaging_qty','!=', 0)]}"-->
+<!--                           context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}"-->
+<!--                           domain="[('product_id','=',product_id)]"-->
+<!--                           groups="product.group_stock_packaging"-->
+<!--                           optional="show"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//tree/field[@name='name']" position="after" >
+                    <field name="product_packaging_qty" optional="show" groups="product.group_stock_packaging" />
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="salesperson_code" options="{'no_create': True, 'no_create_edit':True}"/>
                 </xpath>
             </field>
         </record>
 
+    <!--  Change the attribute of origin field inventoy form-->
         <record id="stock_source_document_view_form" model="ir.ui.view">
             <field name="name">stock.picking.source.document.required</field>
             <field name="model">stock.picking</field>
@@ -70,6 +127,7 @@
             </field>
         </record>
 
+    <!--   Change the attribute of default_code field    -->
         <record id="stock_internal_reference_view_form" model="ir.ui.view">
             <field name="name">product.template.internal.reference.required</field>
             <field name="model">product.template</field>
@@ -81,6 +139,7 @@
             </field>
         </record>
 
+    <!--  Added an attribute in notebook tag invoice form -->
          <record id="account_move_notebook_removed_view_form" model="ir.ui.view">
             <field name="name">account.move.notebook.removed</field>
             <field name="model">account.move</field>

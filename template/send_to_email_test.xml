@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+    <record id="email_template_test_send" model="mail.template">
+            <field name="name">Test email with attachment</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">TEST SEND EMAIL ATTACHMENT (${object.name})</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="email_to">${user.email_formatted | safe}</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;"><![CDATA[ -----Content---]]>
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Testing send email file with attachment
+                </p>
+            </div>
+            </field>
+        </record>
+    </data>
+</odoo>

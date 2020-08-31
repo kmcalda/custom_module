@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    Form View   -->
+    <record model="ir.ui.view" id="visits_crm_form_view">
+        <field name="name">sales.person.code.form</field>
+        <field name="model">sale.person.code</field>
+        <field name="arch" type="xml">
+            <form string="Salesman Code Form View">
+                <sheet>
+                    <group>
+                        <field name="salesperson" required="1"/>
+                        <field name="salesperson_code" required="1"/>
+                        <field name="salesperson_team" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+<!--    Tree View    -->
+    <record model="ir.ui.view" id="salesman_code_tree_view">
+        <field name="name">salesman.code.tree.view</field>
+        <field name="model">sale.person.code</field>
+        <field name="arch" type="xml">
+            <tree string="Salesman Code Tree View">
+                <field name="salesperson"/>
+                <field name="salesperson_team"/>
+                <field name="salesperson_code"/>
+            </tree>
+        </field>
+    </record>
+
+<!--   Abstract View   -->
+    <record model="ir.actions.act_window" id="salesperson_code_view">
+        <field name="name">Salesman Code</field>
+        <field name="res_model">sale.person.code</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create Salesman Code
+            </p>
+        </field>
+    </record>
+
+<!--    For search purpose   -->
+    <record model="ir.ui.view" id="sale_person_code_search_view">
+        <field name="name">salesperson.code.search.view</field>
+        <field name="model">sale.person.code</field>
+        <field name="arch" type="xml">
+            <search string="SalesPerson Search">
+                <field name="salesperson"
+                       filter_domain="['|','|',('salesperson','ilike',self),('salesperson_code' , 'ilike' , self),('salesperson_team' , 'ilike' , self)]"/>
+                <field name="salesperson_code"/>
+                <field name="salesperson_team"/>
+                <separator/>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="salesperson_code_menu"
+              name="Salesman Code"
+              action="salesperson_code_view"
+              parent="sale.menu_sale_config"
+              sequence="2"/>
+</odoo>

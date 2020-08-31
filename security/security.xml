@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    Record Rule for Salesman Code -->
+    <record model="ir.rule" id="salesman_code_record_rule">
+        <field name="name">SalesMan Code</field>
+        <field name="model_id" ref="model_sale_person_code"/>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]" />
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+        <field name="domain_force">[('salesperson','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="sales_manager_code_record_rule">
+        <field name="name">Sales Manager Code</field>
+        <field name="model_id" ref="model_sale_person_code"/>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]" />
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+        <field name="domain_force">[('salesperson','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="administrator_salesman_code_record_rule">
+        <field name="name">Full Access Salesman Code</field>
+        <field name="model_id" ref="model_sale_person_code"/>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_salesman_code_record_rule">
+        <field name="name">Full Access Salesman Code CS</field>
+        <field name="model_id" ref="model_sale_person_code"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+<!--    Record Rule for Customer Service Group-->
+    <record model="ir.rule" id="customer_service_sales_order_line_record_rule">
+        <field name="name">All Orders Lines</field>
+        <field name="model_id" ref="sale.model_sale_order_line"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_sales_report_record_rule">
+        <field name="name">All Orders Analysis</field>
+        <field name="model_id" ref="sale.model_sale_report"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_account_move_line_rule">
+        <field name="name">All Invoices Lines</field>
+        <field name="model_id" ref="account.model_account_move_line"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[('move_id.type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_account_invoice_report_rule">
+        <field name="name">All Orders Analysis</field>
+        <field name="model_id" ref="account.model_account_invoice_report"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_crm_team_rule">
+        <field name="name">All Salesteam</field>
+        <field name="model_id" ref="sales_team.model_crm_team"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_sales_order_rule">
+        <field name="name">All Orders</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="customer_service_account_move_record_rule">
+        <field name="name">All Invoices</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="groups" eval="[(4, ref('group_customer_service_all_leads'))]" />
+        <field name="domain_force">[('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))]</field>
+    </record>
+
+</odoo>
