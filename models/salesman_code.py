@@ -3,6 +3,7 @@ from odoo import fields, models
 
 class SalesPersonCode(models.Model):
     _name = 'sale.person.code'
+    _description = 'Salesman Code'
     _rec_name = 'salesperson_code'
 
     salesperson = fields.Many2one('res.users', string='Salesman')
