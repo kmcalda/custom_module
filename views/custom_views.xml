@@ -76,7 +76,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
-                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                    <attribute name="groups">sales_team.group_sale_manager,custom_module.group_customer_service_all_leads</attribute>
                 </xpath>
 
                 <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
@@ -84,7 +84,7 @@
                 </xpath>
 
                 <button name="action_cancel" position="replace">
-                    <button name="action_cancel" states="draft,sent,sale,nav" type="object" string="Cancel"/>
+                    <button name="action_cancel" states="draft,sent,sale" type="object" string="Cancel Order"/>
                 </button>
                 <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
                     <attribute name="states">sent,sale,nav</attribute>
