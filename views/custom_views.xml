@@ -36,9 +36,13 @@
                 <xpath expr="//field[@name='street']" position="attributes">
                     <attribute name="required">True</attribute>
                 </xpath>
-                <xpath expr="//field[@name='street2']" position="attributes">
-                    <attribute name="required">True</attribute>
+
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="business_name_style" attrs="{'invisible': [('type', '!=', 'contact')]}" required="1"/>
                 </xpath>
+<!--                <xpath expr="//field[@name='street2']" position="attributes">-->
+<!--                    <attribute name="required">True</attribute>-->
+<!--                </xpath>-->
                 <xpath expr="//field[@name='state_id']" position="attributes">
                     <attribute name="required">True</attribute>
                 </xpath>
@@ -52,7 +56,7 @@
                     <div>
                         <field name="region_contact" required="False" placeholder="Region"
                                style="width: 68%; display: inline; margin-right: 2%"/>
-                        <field name="ref" placeholder="Reference"
+                        <field name="ref" placeholder="Customer Code"
                                style="width: 30%" required="1"/>
                     </div>
                 </xpath>
@@ -65,6 +69,19 @@
                     <field name="payable_options" required="1" />
                 </xpath>
 
+            </field>
+        </record>
+
+<!--        Contact search inherit to add  business name/style to search -->
+        <record id="res_partner_added_field_search" model="ir.ui.view">
+            <field name="name">res.partner.added.field.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name"
+                        filter_domain="['|', '|','|',('display_name', 'ilike', self), ('ref', '=', self), ('email', 'ilike', self), ('business_name_style', 'ilike', self)]"/>
+                </xpath>
             </field>
         </record>
 
@@ -109,7 +126,8 @@
                 </xpath>
 
                 <xpath expr="//tree/field[@name='name']" position="after" >
-                    <field name="product_packaging_qty" optional="show" groups="product.group_stock_packaging" />
+                    <field name="product_packaging_qty" optional="show"
+                           groups="product.group_stock_packaging"/>
                 </xpath>
 
                 <xpath expr="//field[@name='payment_term_id']" position="after">

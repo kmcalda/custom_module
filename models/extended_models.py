@@ -14,7 +14,20 @@ class ContactsRespartnerInherited(models.Model):
     _inherit = 'res.partner'
 
     region_contact = fields.Char(string='Region')
-    payable_options = fields.Selection([('vat', 'VAT'), ('exempt', 'VAT EXEMPT')], string='Payable Option', default=False)
+    payable_options = fields.Selection([('vat', 'VAT'), ('exempt', 'VAT EXEMPT')], string='Payable Option',
+                                       default=False)
+    business_name_style = fields.Char('Business Name/Style', help='Business Name/Style')
+
+    # Added business_name_style in any many2one search
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        recs = self.search([('business_name_style', operator, name)] + args, limit=limit)
+        if not recs.ids:
+            return super(ContactsRespartnerInherited, self)._name_search(name=name, args=args,
+                                                       operator=operator,
+                                                       limit=limit)
+        return recs.name_get()
 
     @api.onchange('state_id')
     def onchange_value_state_id(self):
@@ -157,15 +170,14 @@ class SalesOrderCustom(models.Model):
         }
 
     # override confirm button (sales order)
-    def action_confirm(self):
-        """
-
-        :return:
-        """
-        record = super(SalesOrderCustom, self).action_confirm()
-        self._add_to_nav()
-        return record
-
+    # def action_confirm(self):
+    #     """
+    #
+    #     :return:
+    #     """
+    #     record = super(SalesOrderCustom, self).action_confirm()
+    #     self._add_to_nav()
+    #     return record
 
 class SalesOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -252,4 +264,3 @@ class SalesOrderLine(models.Model):
                 self.product_id = False
 
         return result
-
