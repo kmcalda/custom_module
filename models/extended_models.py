@@ -94,10 +94,9 @@ class SalesOrderCustom(models.Model):
     state = fields.Selection(selection_add=[('sent', 'Review Sent')])
     salesperson_code = fields.Many2one('sale.person.code', string='Salesman Code', default=_default_code)
 
-    # @api.onchange('user_id')
-    # def _user_code(self):
-    #     for rec in self:
-    #         return {'domain':{'salesperson_code':[('salesperson','=', rec.user_id.id)]}}
+    @api.onchange('user_id')
+    def _user_code(self):
+        return {'domain':{'salesperson_code':[('salesperson.id','=', self.user_id.id)]}}
 
     def _add_to_nav(self):
         """
@@ -156,7 +155,6 @@ class SalesOrderCustom(models.Model):
             'force_email': True
         }
 
-        print(ctx)
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
