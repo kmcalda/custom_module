@@ -25,8 +25,8 @@ class ContactsRespartnerInherited(models.Model):
         recs = self.search([('business_name_style', operator, name)] + args, limit=limit)
         if not recs.ids:
             return super(ContactsRespartnerInherited, self)._name_search(name=name, args=args,
-                                                       operator=operator,
-                                                       limit=limit)
+                                                                         operator=operator,
+                                                                         limit=limit)
         return recs.name_get()
 
     @api.onchange('state_id')
@@ -96,7 +96,7 @@ class SalesOrderCustom(models.Model):
 
     @api.onchange('user_id')
     def _user_code(self):
-        return {'domain':{'salesperson_code':[('salesperson.id','=', self.user_id.id)]}}
+        return {'domain': {'salesperson_code': [('salesperson.id', '=', self.user_id.id)]}}
 
     def _add_to_nav(self):
         """
@@ -146,7 +146,7 @@ class SalesOrderCustom(models.Model):
             template_id = False
 
         ctx = {
-            'default_model': 'sale.order',
+            'default_model': '',
             'default_res_id': self.ids[0],
             'default_use_template': bool(template_id),
             'default_template_id': template_id,
@@ -176,6 +176,7 @@ class SalesOrderCustom(models.Model):
     #     record = super(SalesOrderCustom, self).action_confirm()
     #     self._add_to_nav()
     #     return record
+
 
 class SalesOrderLine(models.Model):
     _inherit = 'sale.order.line'
