@@ -62,7 +62,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='category_id']" position="after">
-                    <field name="payable_options" required="1" />
+                    <field name="payable_options" required="0" />
                 </xpath>
 
                 <xpath expr="//field[@name='type']" position="after">
