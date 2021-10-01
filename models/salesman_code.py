@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class SalesPersonCode(models.Model):
+    """ Created for salesman code"""
     _name = 'sale.person.code'
     _description = 'Salesman Code'
     _rec_name = 'salesperson_code'

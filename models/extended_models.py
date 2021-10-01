@@ -5,24 +5,35 @@ import base64
 
 
 class ContactsInherited(models.Model):
+    """ Inherited res.country.state to add field"""
     _inherit = 'res.country.state'
 
     region_name = fields.Char(string='Region')
 
 
 class ContactsRespartnerInherited(models.Model):
+    """ Inherited res.partner to add fields and functions"""
     _inherit = 'res.partner'
 
     region_contact = fields.Char(string='Region')
     payable_options = fields.Selection([('vat', 'VAT'), ('exempt', 'VAT EXEMPT')], string='Payable Option',
                                        default=False)
-    business_name_style = fields.Char('Business Name/Style', help='Business Name/Style')
+    business_name_style = fields.Char(
+        'Business Name/Style', help='Business Name/Style')
 
-    # Added business_name_style in any many2one search
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100):
+        """
+        Added business_name_style in any many2one search
+        :param name:
+        :param args:
+        :param operator:
+        :param limit:
+        :return: object
+        """
         args = args or []
-        recs = self.search([('business_name_style', operator, name)] + args, limit=limit)
+        recs = self.search(
+            [('business_name_style', operator, name)] + args, limit=limit)
         if not recs.ids:
             return super(ContactsRespartnerInherited, self)._name_search(name=name, args=args,
                                                                          operator=operator,
@@ -49,7 +60,8 @@ class ContactsRespartnerInherited(models.Model):
         """
         for reg_cont in self:
             if reg_cont.region_contact != reg_cont.state_id.region_name:
-                raise ValidationError("Error! You're not allowed to change the Region!")
+                raise ValidationError(
+                    "Error! You're not allowed to change the Region!")
 
     @api.constrains('vat')
     def _check_value_len(self):
@@ -61,7 +73,8 @@ class ContactsRespartnerInherited(models.Model):
         for val in self:
             if val.vat:
                 if not val.vat.isdigit():
-                    raise ValidationError("Error! Special characters are not allowed!")
+                    raise ValidationError(
+                        "Error! Special characters are not allowed!")
                 if len(val.vat) != 12:
                     raise ValidationError("Error! TIN should be 12-digit!")
 
@@ -76,6 +89,7 @@ class ContactsRespartnerInherited(models.Model):
 
 
 class ProductTemplateInherited(models.Model):
+    """ Inherited the product.template to add constraints to default_code field"""
     _inherit = 'product.template'
 
     # check if the default_code is unique, else throw error!
@@ -86,28 +100,36 @@ class ProductTemplateInherited(models.Model):
 
 
 class SalesOrderCustom(models.Model):
+    """ Inherited sale.order to add fields and functions """
     _inherit = 'sale.order'
 
     def _default_code(self):
         return self.env['sale.person.code'].search([('salesperson', '=', self.env.user.id)], limit=1).id
 
     state = fields.Selection(selection_add=[('sent', 'Review Sent')])
-    salesperson_code = fields.Many2one('sale.person.code', string='Salesman Code', default=_default_code)
+    salesperson_code = fields.Many2one(
+        'sale.person.code', string='Salesman Code', default=_default_code)
 
     @api.onchange('user_id')
     def _user_code(self):
+        """
+        Set the current user to the user_id field
+        :return: object
+        """
         return {'domain': {'salesperson_code': [('salesperson.id', '=', self.user_id.id)]}}
 
     def _add_to_nav(self):
         """
-
-        :return: test function
+        Custom function that generate csv for nav integration
+        Project is on hold or might not be implemented in the future
+        :return:
         """
         self.ensure_one()
         data = ""
         data += "Order,H,%s,%s,%s,%s,%s,FG_LMS_MAI,%s,,,%s,, ,%s,%d\n" % (
             self.partner_id.ref if self.partner_id.ref else "customer code", self.payment_term_id.name, self.name,
-            self.commitment_date if self.commitment_date else self.expected_date.strftime("%m/%d/%Y"), "salesman code",
+            self.commitment_date if self.commitment_date else self.expected_date.strftime(
+                "%m/%d/%Y"), "salesman code",
             self.partner_id.street, self.partner_id.street2 if self.partner_id.street2 else "address 2",
             self.date_order.strftime("%m/%d/%Y"), 0)
         for num, rec in enumerate(self.order_line):
@@ -135,13 +157,15 @@ class SalesOrderCustom(models.Model):
 
     def email_review(self):
         """
-
-        :return: test function for "send for review" button
+        Function for send for review email (button)
+        Created for the purpose of sales order checking/validating
+        :return: object
         """
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
         try:
-            template_id = ir_model_data.get_object_reference('custom_module', 'email_template_review_sale')[1]
+            template_id = ir_model_data.get_object_reference(
+                'custom_module', 'email_template_review_sale')[1]
         except ValueError:
             template_id = False
 
@@ -179,19 +203,28 @@ class SalesOrderCustom(models.Model):
 
 
 class SalesOrderLine(models.Model):
+    """ Inherited the sale.order.line to add fields and functions"""
     _inherit = 'sale.order.line'
 
-    # calculate uom qty / packaging
     @api.onchange('product_uom_qty')
     def _calculate_pcs_box(self):
+        """
+        Divide uom qty and packaging the set the value to product_packaging_qty
+        :return:
+        """
         for data in self:
             if data.product_packaging:
                 self.product_packaging_qty = data.product_uom_qty / data.product_packaging.qty
 
-    product_packaging_qty = fields.Float(string='Package Quantity', descriptio="Field for packaging qty")
+    product_packaging_qty = fields.Float(
+        string='Package Quantity', descriptio="Field for packaging qty")
 
     # overide product_packaging method
     def _check_package(self):
+        """
+        Override product_packaging method
+        :return: object
+        """
         default_uom = self.product_id.uom_id
         pack = self.product_packaging
         qty = self.product_uom_qty
@@ -204,14 +237,23 @@ class SalesOrderLine(models.Model):
     # update the unit quantity onchange of package quantity
     @api.onchange('product_packaging_qty')
     def _product_packaging_qty_calc(self):
+        """
+        Update the unit quantity when the package quantity is changed
+        :return:
+        """
         if self.product_packaging:
             self.product_uom_qty = self.product_packaging_qty * self.product_packaging.qty
 
     # override onchange for payable option
     @api.onchange('product_id')
     def product_id_change(self):
+        """
+        Override the onchange of product_id for payable options
+        :return: object
+        """
         customer_id = self._context.get('partner_id')
-        customer_option = self.env['res.partner'].search([('id', '=', customer_id)]).payable_options
+        customer_option = self.env['res.partner'].search(
+            [('id', '=', customer_id)]).payable_options
         if not self.product_id:
             return
         valid_values = self.product_id.product_tmpl_id.valid_product_template_attribute_line_ids.product_template_value_ids
@@ -239,7 +281,8 @@ class SalesOrderLine(models.Model):
             uom=self.product_uom.id
         )
 
-        vals.update(name=self.get_sale_order_line_multiline_description_sale(product))
+        vals.update(
+            name=self.get_sale_order_line_multiline_description_sale(product))
 
         if customer_option == 'vat':
             self._compute_tax_id()
